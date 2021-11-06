@@ -1,15 +1,22 @@
-let zagrade = function(s) {
-    for (let i = 0; i < s.length; i++) {
-        if (s.includes("[]") || s.includes("()") || s.includes("{}")) {
-            s = s.replace("[]", "");
-            s = s.replace("()", "");
-            s = s.replace("{}", "");
-            return true;
-        } else {
-            return false;
-        }
+let openers = "{[(";
+let  following = {
+    "[": "]",
+    "{": "}",
+    "(": ")",
+};
 
+let zagrade = function(s) {
+    let stack = [];
+    for (let i of s) {
+        if (openers.includes(i)) {
+            stack.push(following[i]);
+        } else {
+            if (stack.pop() != i) {
+                return false;
+            }
+        }
     }
+    return true;
    };
 
    console.log(zagrade("[()]()()")); // → true
